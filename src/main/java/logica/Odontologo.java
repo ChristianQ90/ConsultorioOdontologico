@@ -1,36 +1,37 @@
 
 package logica;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-
-public class Odontologo extends Persona{
-    private int id_odontologo;
+@Entity
+public class Odontologo extends Persona implements Serializable{
+    //private int id_odontologo;
     private String especialidad;
+    @OneToOne
     private Horario unHorario;
+    @OneToOne
     private Usuario unUsuario;
+    @OneToMany (mappedBy = "odonto")//relacion (1, n) , mapea a traves del objeto odonto en la clase turno
     private List<Turno> listaTurnos;
+    
     
     public Odontologo() {
     }
 
-    public Odontologo(int id_odontologo, String especialidad, Horario unHorario, Usuario unUsuario, List<Turno> listaTurnos, String dni, String nombre, String apellido, String telefono, String direccion, Date fecha_nacimiento) {
-        super(dni, nombre, apellido, telefono, direccion, fecha_nacimiento);
-        this.id_odontologo = id_odontologo;
+    public Odontologo(String especialidad, Horario unHorario, Usuario unUsuario, List<Turno> listaTurnos, int id, String dni, String nombre, String apellido, String telefono, String direccion, Date fecha_nacimiento) {
+        super(id, dni, nombre, apellido, telefono, direccion, fecha_nacimiento);
         this.especialidad = especialidad;
         this.unHorario = unHorario;
         this.unUsuario = unUsuario;
         this.listaTurnos = listaTurnos;
     }
 
-    public int getId_odontologo() {
-        return id_odontologo;
-    }
-
-    public void setId_odontologo(int id_odontologo) {
-        this.id_odontologo = id_odontologo;
-    }
+   
 
     public String getEspecialidad() {
         return especialidad;
