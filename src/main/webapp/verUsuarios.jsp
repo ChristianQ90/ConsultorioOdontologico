@@ -24,6 +24,7 @@
                                             <th>Id</th>
                                             <th>Nombre de Usuario</th>
                                             <th>Rol</th>
+                                            <th style="width: 210px">Acción</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -31,6 +32,7 @@
                                             <th>Id</th>
                                             <th>Nombre de Usuario</th>
                                             <th>Rol</th>
+                                            <th style="width: 210px">Acción</th>
                                         </tr>
                                     </tfoot>
                                     <% 
@@ -39,9 +41,25 @@
                                     <tbody>
                                         <% for (Usuario usu : listaUsuarios){%>
                                         <tr>
-                                            <td><%=usu.getId_usuario() %></td>
+                                            <td id="id_usu<%=usu.getId_usuario()%>"><%=usu.getId_usuario() %></td>
                                             <td><%=usu.getNombreUsuario() %></td>
                                             <td><%=usu.getRol() %></td>
+                                            
+                                            <td style="display: flex; width: 230px;">
+                                                <form name="eliminar" action="SvEliminarUsuarios" method="POST"><!-- Enviamos a este servlet mediante POST-->
+                                                    <button class="btn btn-primary btn-user btn-block" type="submit" style="background-color: red; margin-right: 5px;" >
+                                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                                    </button>
+                                                    <input type="hidden" name="id" value="<%=usu.getId_usuario() %>"> <!-- Esto es para mandar el código al servlet -->
+                                                </form>
+                                                
+                                                <form name="editar" action="SvEditarUsuarios" method="GET"><!-- Enviamos a este servlet mediante POST-->
+                                                    <button class="btn btn-primary btn-user btn-block" type="submit" style="margin-left: 5px;" >
+                                                        <i class="fas fa-pencil-alt"></i> Editar
+                                                    </button>
+                                                    <input type="hidden" name="id" value="<%=usu.getId_usuario() %>"> <!-- Esto es para mandar el código al servlet -->
+                                                </form>
+                                            </td>
                                         </tr>   
                                         <%}%>
                                     </tbody>
