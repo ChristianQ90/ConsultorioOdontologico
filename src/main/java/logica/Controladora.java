@@ -35,4 +35,23 @@ public class Controladora {
     public void editarUsuario(Usuario usu) {
         controlPersis.editarUsuario(usu);
     }
+
+    public boolean comprobarIngreso(String usuario, String contrasenia) {
+        //Lo ideal es hacer la query a la base de datos para traer solo el Usuario y comprobar contraseña
+        boolean ingreso = false;
+        
+        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+        listaUsuarios = controlPersis.getUsuarios();
+        
+        for(Usuario usu : listaUsuarios){
+            if(usu.getNombreUsuario().equals(usuario)){
+                if(usu.getContrasenia().equals(contrasenia)){
+                    ingreso = true;
+                }else{
+                    ingreso = false;
+                }
+            }
+        }
+        return ingreso;
+    }
 }
