@@ -54,4 +54,22 @@ public class Controladora {
         }
         return ingreso;
     }
+
+    public boolean comprobarExistenciaDeAdmin(String rolUsuario) {
+        
+        boolean existeAdmin = false;
+        System.out.println("svusuAdmin false");
+        existeAdmin = controlPersis.comprobarExistenciaDeAdmin(rolUsuario);
+        if (!existeAdmin){
+            Usuario usuAdmin = new Usuario();
+            usuAdmin.setNombreUsuario("Admin");
+            usuAdmin.setContrasenia("Admin");
+            usuAdmin.setRol(rolUsuario);
+            controlPersis.crearUsuario(usuAdmin);
+            existeAdmin=true;
+            System.out.println("svusuAdmin true");
+        }
+        return existeAdmin;
+     }
+
 }

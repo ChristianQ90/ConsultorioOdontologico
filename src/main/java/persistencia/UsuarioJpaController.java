@@ -36,6 +36,7 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) {
+        System.out.println("usuJPA Create "+ usuario.getNombreUsuario());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -121,6 +122,25 @@ public class UsuarioJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             return em.find(Usuario.class, id);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public boolean existeUsuarioAdmin(String rolUsuario) {
+        System.out.println("usuJPA "+ rolUsuario);
+        EntityManager em = getEntityManager();
+        try {
+            String jpql = "SELECT u FROM Usuario u WHERE u.rol = :rol";
+            List<Usuario> resultados = em.createQuery(jpql, Usuario.class)
+                                         .setParameter("rol", rolUsuario)
+                                         .setMaxResults(1)
+                                         .getResultList();
+            if(resultados.size()==0){
+                return false;
+            }else{
+                return true;
+            }
         } finally {
             em.close();
         }

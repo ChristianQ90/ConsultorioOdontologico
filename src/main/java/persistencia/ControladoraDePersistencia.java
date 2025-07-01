@@ -53,5 +53,9 @@ public class ControladoraDePersistencia {
             Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public boolean comprobarExistenciaDeAdmin(String rolUsuario) {
+        return usuJPA.existeUsuarioAdmin(rolUsuario);
+    }
+ 
 }

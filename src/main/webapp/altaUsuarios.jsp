@@ -15,8 +15,11 @@
                                             placeholder="Contraseña">
                                     </div>
                                     <div class="col-sm-6 mb-3">
-                                        <input type="text" class="form-control form-control-user" id="rol" name="rol"
-                                            placeholder="Rol">
+                                        <select class="form-control form-control" id="rol" name="rol" style="border-radius: 2rem; height: 3rem; font-size: 14;" required>
+                                            <option value="" disabled selected>Seleccione un rol</option>
+                                            <option value="Secretario/a">Secretario/a</option>
+                                            <option value="Odontologo/a">Odontólogo/a</option>
+                                        </select>
                                     </div>
                                     
                                 <button class="btn btn-primary btn-user btn-block" type="submit" >

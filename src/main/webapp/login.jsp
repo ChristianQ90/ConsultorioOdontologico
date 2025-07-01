@@ -24,8 +24,22 @@
 
 </head>
 
-<body class="bg-gradient-primary">
-
+<%
+    Boolean adminVerificado = (Boolean) session.getAttribute("adminVerificado");
+    if (adminVerificado == null || !adminVerificado) {
+%>
+    <body class="bg-gradient-primary" onload="document.getElementById('autoForm').submit();">
+    <form id="autoForm" action="SvUsuAdmin" method="POST">
+        <input type="hidden" name="rol" value="Admin">
+    </form>
+<%
+    } else {
+%>
+    <body class="bg-gradient-primary">
+<%
+    }
+%>
+ 
     <div class="container">
 
         <!-- Outer Row -->
@@ -49,9 +63,13 @@
                                                    id="usuario" name="usuario"
                                                 placeholder="Usuario">
                                         </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
+                                        <div class="form-group position-relative">
+                                            <input type="password" class="form-control form-control-user" 
                                                    id="contrasenia" name="contrasenia" placeholder="Contraseña">
+                                            <span onclick="togglePassword()" 
+                                                style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); cursor: pointer;">
+                                                <i class="fas fa-eye" id="toggleIcon"></i>
+                                            </span>
                                         </div>
                                        
                                         <button class="btn btn-primary btn-user btn-block" type="submit" >
@@ -74,6 +92,24 @@
 
     </div>
 
+    <!-- Para mostrar contraseña -->
+    <script>
+       function togglePassword() {
+           const password = document.getElementById("contrasenia");
+           const icon = document.getElementById("toggleIcon");
+
+           if (password.type === "password") {
+               password.type = "text";
+               icon.classList.remove("fa-eye");
+               icon.classList.add("fa-eye-slash");
+           } else {
+               password.type = "password";
+               icon.classList.remove("fa-eye-slash");
+               icon.classList.add("fa-eye");
+           }
+       }
+   </script>
+    
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -83,6 +119,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
+    
 </body>
 </html>
