@@ -15,14 +15,24 @@ public class Horario implements Serializable {
     private int id_horario;
     private String horario_incio;
     private String horario_fin;
+    private String dias_atencion;
 
     public Horario() {
     }
 
-    public Horario(int id_horario, String horario_incio, String horario_fin) {
+    public Horario(int id_horario, String horario_incio, String horario_fin, String dias_atencion) {
         this.id_horario = id_horario;
         this.horario_incio = horario_incio;
         this.horario_fin = horario_fin;
+        this.dias_atencion = dias_atencion;
+    }
+
+    public String getDias_atencion() {
+        return dias_atencion;
+    }
+
+    public void setDias_atencion(String dias_atencion) {
+        this.dias_atencion = dias_atencion;
     }
 
     public int getId_horario() {

@@ -5,6 +5,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,7 +37,7 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) {
-        System.out.println("usuJPA Create "+ usuario.getNombreUsuario());
+        
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -128,7 +129,7 @@ public class UsuarioJpaController implements Serializable {
     }
     
     public boolean existeUsuarioAdmin(String rolUsuario) {
-        System.out.println("usuJPA "+ rolUsuario);
+        
         EntityManager em = getEntityManager();
         try {
             String jpql = "SELECT u FROM Usuario u WHERE u.rol = :rol";
@@ -157,6 +158,21 @@ public class UsuarioJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    List<Usuario> getUsuariosOdontoSinAsignar() {
+        
+        EntityManager em = getEntityManager();
+        List<Usuario> resultados = new ArrayList<Usuario>();
+        try {
+            String jpql = "SELECT u FROM Usuario u WHERE u.rol = 'Odontologo/a' AND u.id_usuario NOT IN " +
+                      "(SELECT o.unUsuario.id_usuario FROM Odontologo o WHERE o.unUsuario IS NOT NULL)";
+            resultados = em.createQuery(jpql, Usuario.class).getResultList();
+            
+        } finally {
+            em.close();
+        }
+        return resultados;
     }
     
 }

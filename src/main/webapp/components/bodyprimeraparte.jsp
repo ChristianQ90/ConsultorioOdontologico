@@ -53,7 +53,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Acciones:</h6>
                         <a class="collapse-item" href="">Ver Odontólogos</a>
-                        <a class="collapse-item" href="altaOdontologo.jsp">Alta Odontólogos</a>
+                        <a class="collapse-item" href="SvUsuOdontoSinAsignar">Alta Odontólogos</a>
                     </div>
                 </div>
             </li>

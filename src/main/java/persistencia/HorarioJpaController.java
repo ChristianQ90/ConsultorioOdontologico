@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package persistencia;
 
 import java.io.Serializable;
@@ -20,14 +23,14 @@ public class HorarioJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
-    
+
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
+
     public HorarioJpaController() {
             emf = Persistence.createEntityManagerFactory("ConsultarioOdontologico_PU");
-    }
+    } 
     
     public void create(Horario horario) {
         EntityManager em = null;
@@ -131,6 +134,18 @@ public class HorarioJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public Horario crearHorario(Horario horario) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(horario);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return horario; // aquí devolvemos el objeto, ahora tiene su ID asignado.
     }
     
 }

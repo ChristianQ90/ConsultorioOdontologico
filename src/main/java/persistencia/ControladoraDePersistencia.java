@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import logica.Horario;
+import logica.Odontologo;
+import logica.Persona;
 import logica.Usuario;
 import persistencia.exceptions.NonexistentEntityException;
 
@@ -56,6 +59,22 @@ public class ControladoraDePersistencia {
 
     public boolean comprobarExistenciaDeAdmin(String rolUsuario) {
         return usuJPA.existeUsuarioAdmin(rolUsuario);
+    }
+
+    public List<Usuario> getUsuariosOdontoSinAsignar() {
+        return usuJPA.getUsuariosOdontoSinAsignar();
+    }
+
+    public void crearPersona(Persona pers) {
+        persJPA.create(pers);
+    }
+
+    public Horario crearHorario(Horario horario) {
+        return horaJPA.crearHorario(horario);
+    }
+
+    public void crearOdontologo(Odontologo odonto) {
+        odontoJPA.create(odonto);
     }
  
 }

@@ -58,8 +58,8 @@ public class Controladora {
     public boolean comprobarExistenciaDeAdmin(String rolUsuario) {
         
         boolean existeAdmin = false;
-        System.out.println("svusuAdmin false");
         existeAdmin = controlPersis.comprobarExistenciaDeAdmin(rolUsuario);
+        
         if (!existeAdmin){
             Usuario usuAdmin = new Usuario();
             usuAdmin.setNombreUsuario("Admin");
@@ -71,5 +71,21 @@ public class Controladora {
         }
         return existeAdmin;
      }
+
+    public List<Usuario> getUsuariosOdontoSinAsignar() {
+        return controlPersis.getUsuariosOdontoSinAsignar();
+    }
+
+    public void crearPersona(Persona pers) {
+        controlPersis.crearPersona(pers);
+    }
+
+    public Horario crearHorario(Horario horario) {
+        return controlPersis.crearHorario(horario);
+    }
+
+    public void crearOdontologo(Odontologo odonto) {
+        controlPersis.crearOdontologo(odonto);
+    }
 
 }
