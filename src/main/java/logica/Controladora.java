@@ -88,4 +88,44 @@ public class Controladora {
         controlPersis.crearOdontologo(odonto);
     }
 
+    public List<Odontologo> getOdontologos() {
+        return controlPersis.getOdontologos();
+    }
+
+    public List<Horario> getHorarios() {
+        return controlPersis.getHorarios();
+    }
+
+    public List<Usuario> getUsuariosOdonto() {
+        return controlPersis.getUsuariosOdonto();
+    }
+
+    public void borrarOdontologo(int idOdonto) {
+        controlPersis.borrarOdontologo(idOdonto);
+    }
+
+    public Odontologo traerOdontologo(int idOdonto) {
+        return controlPersis.traerOdontologo(idOdonto);
+    }
+
+    public Persona traerPersona(String dni) {
+        return controlPersis.traerPersona(dni);
+    }
+
+    public void editarPersona(Persona pers) {
+        controlPersis.editarPersona(pers);
+    }
+
+    public Horario editarHorario(Horario horario) {
+        return controlPersis.editarHorario(horario);
+    }
+
+    public void editarOdontologo(Odontologo odonto) {
+        controlPersis.editarOdontologo(odonto);
+    }
+
+    public void borrarPersona(int idPers) {
+        controlPersis.borrarPersona(idPers);
+    }
+
 }

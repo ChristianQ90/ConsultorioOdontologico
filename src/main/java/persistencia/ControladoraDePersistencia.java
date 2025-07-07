@@ -76,5 +76,69 @@ public class ControladoraDePersistencia {
     public void crearOdontologo(Odontologo odonto) {
         odontoJPA.create(odonto);
     }
+
+    public List<Odontologo> getOdontologos() {
+        return odontoJPA.findOdontologoEntities();
+    }
+
+    public List<Horario> getHorarios() {
+        return horaJPA.findHorarioEntities();
+    }
+
+    public List<Usuario> getUsuariosOdonto() {
+        return usuJPA.getUsuariosOdonto();
+    }
+
+    public void borrarOdontologo(int idOdonto) {
+        try {
+            odontoJPA.destroy(idOdonto);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Odontologo traerOdontologo(int idOdonto) {
+        return odontoJPA.findOdontologo(idOdonto);
+    }
+
+    public Persona traerPersona(String dni) {
+        return persJPA.traerPersona(dni);
+    }
+
+    public void editarPersona(Persona pers) {
+        try {
+            persJPA.edit(pers);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Horario editarHorario(Horario horario) {
+        try {
+            return horaJPA.editarHorario(horario);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void editarOdontologo(Odontologo odonto) {
+        try {
+            odontoJPA.edit(odonto);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void borrarPersona(int idPers) {
+        try {
+            persJPA.destroy(idPers);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+ 
+    
  
 }

@@ -148,4 +148,28 @@ public class HorarioJpaController implements Serializable {
         return horario; // aquí devolvemos el objeto, ahora tiene su ID asignado.
     }
     
+      public Horario editarHorario (Horario horario) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            horario = em.merge(horario);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                int id = horario.getId_horario();
+                if (findHorario(id) == null) {
+                    throw new NonexistentEntityException("The horario with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return horario;
+    }
+    
 }

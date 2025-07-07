@@ -4,6 +4,7 @@ package logica;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -12,9 +13,9 @@ import javax.persistence.OneToOne;
 public class Odontologo extends Persona implements Serializable{
     //private int id_odontologo;
     private String especialidad;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Horario unHorario;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Usuario unUsuario;
     @OneToMany (mappedBy = "odonto")//relacion (1, n) , mapea a traves del objeto odonto en la clase turno
     private List<Turno> listaTurnos;

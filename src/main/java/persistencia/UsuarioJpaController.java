@@ -174,5 +174,19 @@ public class UsuarioJpaController implements Serializable {
         }
         return resultados;
     }
+
+    List<Usuario> getUsuariosOdonto() {
+        
+        EntityManager em = getEntityManager();
+        List<Usuario> resultados = new ArrayList<Usuario>();
+        try {
+            String jpql = "SELECT u FROM Usuario u WHERE u.rol = 'Odontologo/a'";
+            resultados = em.createQuery(jpql, Usuario.class).getResultList();
+            
+        } finally {
+            em.close();
+        }
+        return resultados;
+    }
     
 }

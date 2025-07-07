@@ -3,7 +3,6 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,13 +16,12 @@ import logica.Persona;
 import logica.Usuario;
 
 
-@WebServlet(name = "SvOdontologo", urlPatterns = {"/SvOdontologo"})
-public class SvOdontologo extends HttpServlet {
+@WebServlet(name = "SvEditarOdontologos", urlPatterns = {"/SvEditarOdontologos"})
+public class SvEditarOdontologos extends HttpServlet {
     Controladora control = new Controladora();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
 
     }
 
@@ -31,23 +29,24 @@ public class SvOdontologo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Odontologo> listaOdontologos = control.getOdontologos();
-        List<Horario> listaHorarios = control.getHorarios();
-        List<Usuario> listaUsuariosOdonto = control.getUsuariosOdonto();
         
-        HttpSession misession = request.getSession();
-        misession.setAttribute("listaOdontologos", listaOdontologos);
-        misession.setAttribute("listaHorarios", listaHorarios);
-        misession.setAttribute("listaUsuariosOdonto", listaUsuariosOdonto);
+        int idOdonto = Integer.parseInt(request.getParameter("id"));
+        
+        Odontologo odontoEditar = control.traerOdontologo(idOdonto);
+        
+        HttpSession miSesion = request.getSession();
+        miSesion.setAttribute("odontoEditar", odontoEditar);
         
         
-        response.sendRedirect("verOdontologos.jsp");
+        response.sendRedirect("SvUsuOdontoSinAsignarEdit");
+        
+        
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
         String dni = request.getParameter("dni");
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
@@ -74,23 +73,26 @@ public class SvOdontologo extends HttpServlet {
         System.out.println("dias concat : "+diasConcat);*/
         Usuario usuario = control.traerUsuario(usuarioID);
         
-        Persona pers = new Persona();
+        Odontologo odonto = (Odontologo) request.getSession().getAttribute("odontoEditar");
+        
+        Persona pers = control.traerPersona(odonto.getDni());
         pers.setDni(dni);
         pers.setNombre(nombre);
         pers.setApellido(apellido);
         pers.setTelefono(telefono);
         pers.setDireccion(direccion);
         pers.setFecha_nacimiento(fechaNac);
-        control.crearPersona(pers);
+        control.editarPersona(pers);
         
-        Horario horario = new Horario();
+        Horario horario = odonto.getUnHorario();
         horario.setDias_atencion(diasConcat);
         horario.setHorario_incio(horaInicio);
         horario.setHorario_fin(horaFin);
-        horario = control.crearHorario(horario); // persistimos y obtenemos el persistido con ID.
+        horario = control.editarHorario(horario); // persistimos y obtenemos el persistido con ID.
         
         System.out.println("horario ID : "+horario.getId_horario()+" , usuario ID: "+usuario.getId_usuario());
-        Odontologo odonto = new Odontologo();
+   
+
         odonto.setDni(pers.getDni());
         odonto.setNombre(pers.getNombre());
         odonto.setApellido(pers.getApellido());
@@ -100,9 +102,9 @@ public class SvOdontologo extends HttpServlet {
         odonto.setEspecialidad(especialidad);
         odonto.setUnHorario(horario);
         odonto.setUnUsuario(usuario);
-        control.crearOdontologo(odonto);
+        control.editarOdontologo(odonto);
         
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("SvOdontologo");
     }
 
 

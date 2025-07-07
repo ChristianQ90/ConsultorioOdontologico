@@ -5,6 +5,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import logica.Persona;
+import logica.Usuario;
 import persistencia.exceptions.NonexistentEntityException;
 
 /**
@@ -137,6 +139,23 @@ public class PersonaJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    Persona traerPersona(String dni) {
+        EntityManager em = getEntityManager();
+        Persona pers = null;
+        List<Persona> resultados = new ArrayList<Persona>();
+        try {
+            String jpql = "SELECT p FROM Persona p WHERE p.dni = :dni";
+            resultados = em.createQuery(jpql, Persona.class).setParameter("dni", dni).getResultList();
+            
+            if (!resultados.isEmpty()) {
+                pers = resultados.get(0);
+            }
+        } finally {
+            em.close();
+        }
+        return pers;
     }
     
 }
