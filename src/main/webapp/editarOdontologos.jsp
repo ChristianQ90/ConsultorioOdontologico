@@ -34,6 +34,7 @@
                                     <div class="col-sm-6 mb-3">
                                         <%  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                             String fechaFormateada = sdf.format(odontoEditar.getFecha_nacimiento()); %>
+                                        <label class="form-check-label" for="fechanac" style="margin-left: 1rem;">Fecha de Nacimiento: </label>
                                         <input type="date" class="form-control form-control-user" id="fechanac" name="fechanac"
                                                placeholder="Fecha Nac" value="<%=fechaFormateada %>" required>
                                     </div>

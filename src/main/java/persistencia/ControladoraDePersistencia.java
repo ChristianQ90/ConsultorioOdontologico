@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import logica.Horario;
 import logica.Odontologo;
 import logica.Persona;
+import logica.Responsable;
 import logica.Usuario;
 import persistencia.exceptions.NonexistentEntityException;
 
@@ -137,6 +138,36 @@ public class ControladoraDePersistencia {
             Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void crearResponsable(Responsable resp) {
+        respJPA.create(resp);
+    }
+
+    public List<Responsable> getResponsables() {
+        return respJPA.findResponsableEntities();
+    }
+
+    public void borrarResponsable(int id) {
+        try {
+            respJPA.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Responsable traerResponsable(int id) {
+        return respJPA.findResponsable(id);
+    }
+
+    public void editarResponsable(Responsable resp) {
+        try {
+            respJPA.edit(resp);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
 
  
     

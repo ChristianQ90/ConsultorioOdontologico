@@ -62,7 +62,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-solid fa-users"></i>
+                    <i class="fas fa-solid fa-user-injured"></i>
                     <span>Pacientes</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -71,6 +71,23 @@
                         <h6 class="collapse-header">Acciones:</h6>
                         <a class="collapse-item" href="">Ver Pacientes</a>
                         <a class="collapse-item" href="">Alta Pacientes</a>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResp"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-solid fa-people-arrows"></i>
+                    <span>Responsables</span>
+                </a>
+                <div id="collapseResp" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Acciones:</h6>
+                        <a class="collapse-item" href="SvResponsables">Ver Responsables</a>
+                        <a class="collapse-item" href="altaResponsables.jsp">Alta Responsables</a>
                     </div>
                 </div>
             </li>

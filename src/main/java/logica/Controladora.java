@@ -128,4 +128,24 @@ public class Controladora {
         controlPersis.borrarPersona(idPers);
     }
 
+    public void crearResponsable(Responsable resp) {
+        controlPersis.crearResponsable(resp);
+    }
+
+    public List<Responsable> getResponsables() {
+        return controlPersis.getResponsables();
+    }
+
+    public void borrarResponsable(int id) {
+        controlPersis.borrarResponsable(id);
+    }
+
+    public Responsable traerResponsable(int id) {
+        return controlPersis.traerResponsable(id);
+    }
+
+    public void editarResponsable(Responsable resp) {
+        controlPersis.editarResponsable(resp);
+    }
+
 }

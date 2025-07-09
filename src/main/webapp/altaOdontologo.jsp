@@ -30,6 +30,7 @@
                                                placeholder="Dirección" required>
                                     </div>
                                     <div class="col-sm-6 mb-3">
+                                        <label class="form-check-label" for="fechanac" style="margin-left: 1rem;">Fecha de Nacimiento: </label>
                                         <input type="date" class="form-control form-control-user" id="fechanac" name="fechanac"
                                                placeholder="Fecha Nac" required>
                                     </div>
