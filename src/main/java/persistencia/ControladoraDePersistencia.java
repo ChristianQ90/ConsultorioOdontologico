@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import logica.Horario;
 import logica.Odontologo;
+import logica.Paciente;
 import logica.Persona;
 import logica.Responsable;
 import logica.Usuario;
@@ -162,6 +163,38 @@ public class ControladoraDePersistencia {
     public void editarResponsable(Responsable resp) {
         try {
             respJPA.edit(resp);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void crearPaciente(Paciente pacien) {
+        pacJPA.create(pacien);
+    }
+
+    public List<Responsable> getResponsablesNoAsignados() {
+        return respJPA.getResponsablesNoAsignados();
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacJPA.findPacienteEntities();
+    }
+
+    public Paciente traerPaciente(int id) {
+        return pacJPA.findPaciente(id);
+    }
+
+    public void borrarPaciente(int id) {
+        try {
+            pacJPA.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editarPaciente(Paciente paciente) {
+        try {
+            pacJPA.edit(paciente);
         } catch (Exception ex) {
             Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }

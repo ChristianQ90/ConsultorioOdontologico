@@ -11,12 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logica.Controladora;
-import logica.Persona;
-import logica.Responsable;
+import logica.Paciente;
 
 
-@WebServlet(name = "SvResponsables", urlPatterns = {"/SvResponsables"})
-public class SvResponsables extends HttpServlet {
+@WebServlet(name = "SvPaciente", urlPatterns = {"/SvPaciente"})
+public class SvPaciente extends HttpServlet {
     Controladora control = new Controladora();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -24,16 +23,16 @@ public class SvResponsables extends HttpServlet {
 
     }
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        List<Responsable> listaResponsables = control.getResponsables();
+        List<Paciente> listaPacientes = control.getPacientes();
         
         HttpSession misession = request.getSession();
-        misession.setAttribute("listaResponsables", listaResponsables);
+        misession.setAttribute("listaPacientes", listaPacientes);
         
-        response.sendRedirect("verResponsables.jsp");
+        response.sendRedirect("verPacientes.jsp");
     }
 
 
@@ -46,28 +45,21 @@ public class SvResponsables extends HttpServlet {
         String apellido = request.getParameter("apellido");
         String telefono = request.getParameter("telefono");
         String direccion = request.getParameter("direccion");
-        Date fechaNac =  Date.valueOf(request.getParameter("fechanac"));
-        String tipo_responsabilidad = request.getParameter("tipo_responsabilidad");
+        Date fechaNac = (Date) request.getSession().getAttribute("fechaNac");
+        String cuentaConSegMed = request.getParameter("tieneSM");
+        boolean tieneSM = false;
+        String grupoSang = request.getParameter("grupoSang");
+        String idResponsable = request.getParameter("responsable");
         
-        Persona pers = new Persona();
-        pers.setDni(dni);
-        pers.setNombre(nombre);
-        pers.setApellido(apellido);
-        pers.setTelefono(telefono);
-        pers.setDireccion(direccion);
-        pers.setFecha_nacimiento(fechaNac);
-        control.crearPersona(pers);
-        
-        Responsable resp = new Responsable();
-        resp.setDni(pers.getDni());
-        resp.setNombre(pers.getNombre());
-        resp.setApellido(pers.getApellido());
-        resp.setTelefono(pers.getTelefono());
-        resp.setDireccion(pers.getDireccion());
-        resp.setFecha_nacimiento(pers.getFecha_nacimiento());
-        resp.setTipo_responsabilidad(tipo_responsabilidad);
-        control.crearResponsable(resp);
-        
+        //System.out.println(cuentaConSegMed+" GS: "+grupoSang+" IdResp: "+idResponsable);
+        if (cuentaConSegMed!=null){
+            if(cuentaConSegMed.equalsIgnoreCase("true")){
+            tieneSM = true;
+            }
+        }
+        control.crearPersona(dni,nombre,apellido,telefono,direccion,fechaNac);
+        control.crearPaciente(dni,nombre,apellido,telefono,direccion,fechaNac,tieneSM,grupoSang,idResponsable);
+
         response.sendRedirect("index.jsp");
     }
 

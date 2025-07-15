@@ -50,14 +50,14 @@
                                                     <button class="btn btn-primary btn-user btn-block" type="submit" style="background-color: red; margin-right: 5px;" >
                                                         <i class="fas fa-trash-alt"></i> Eliminar
                                                     </button>
-                                                    <input type="hidden" name="id" value="<%=usu.getId_usuario() %>"> <!-- Esto es para mandar el código al servlet -->
+                                                    <input type="hidden" name="id" value="<%=usu.getId_usuario() %>"> <!-- Enviamos el id al servlet -->
                                                 </form>
                                                 
-                                                <form name="editar" action="SvEditarUsuarios" method="GET"><!-- Enviamos a este servlet mediante POST-->
+                                                <form name="editar" action="SvEditarUsuarios" method="GET">
                                                     <button class="btn btn-primary btn-user btn-block" type="submit" style="margin-left: 5px;" >
                                                         <i class="fas fa-pencil-alt"></i> Editar
                                                     </button>
-                                                    <input type="hidden" name="id" value="<%=usu.getId_usuario() %>"> <!-- Esto es para mandar el código al servlet -->
+                                                    <input type="hidden" name="id" value="<%=usu.getId_usuario() %>"> <!-- Enviamos el id al servlet -->
                                                 </form>
                                             </td>
                                         </tr>   

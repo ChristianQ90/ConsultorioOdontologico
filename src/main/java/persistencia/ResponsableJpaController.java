@@ -5,6 +5,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import logica.Responsable;
+import logica.Usuario;
 import persistencia.exceptions.NonexistentEntityException;
 
 /**
@@ -137,6 +139,20 @@ public class ResponsableJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    List<Responsable> getResponsablesNoAsignados() {
+        
+        EntityManager em = getEntityManager();
+        List<Responsable> resultados = new ArrayList<Responsable>();
+        try {
+            String jpql = "SELECT r FROM Responsable r LEFT JOIN Paciente p ON p.responsable = r WHERE p.id IS NULL";
+            resultados = em.createQuery(jpql, Responsable.class).getResultList();
+            
+        } finally {
+            em.close();
+        }
+        return resultados;
     }
     
 }

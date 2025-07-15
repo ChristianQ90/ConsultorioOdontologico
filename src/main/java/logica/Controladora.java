@@ -1,6 +1,10 @@
 
 package logica;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import persistencia.ControladoraDePersistencia;
@@ -147,5 +151,105 @@ public class Controladora {
     public void editarResponsable(Responsable resp) {
         controlPersis.editarResponsable(resp);
     }
+
+    public long verificarEdad(Date fechaNac) {
+        LocalDate fechaActual = LocalDate.now();
+        //System.out.println(fechaActual);
+        String fechaNacString = String.valueOf(fechaNac);
+        String [] fechaSplit = fechaNacString.split("-");
+        int anio = Integer.parseInt(fechaSplit[0]);
+        int mes = Integer.parseInt(fechaSplit[1]);
+        int dia = Integer.parseInt(fechaSplit[2]);
+        LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+        //System.out.println(fechaNacimiento);
+        long edad = ChronoUnit.YEARS.between(fechaNacimiento, fechaActual);
+        return edad;
+    }
+
+    public void crearPaciente(String dni, String nombre, String apellido, String telefono, String direccion, Date fechaNac, boolean tieneSM, String grupoSang, String idResponsable) {
+        
+        Integer idResp = null;
+        Responsable respons= null;
+        if (idResponsable!= null){
+            idResp = Integer.parseInt( idResponsable);
+            respons= traerResponsable(idResp);
+        }
+        
+        Paciente pacien = new Paciente();
+        pacien.setDni(dni);
+        pacien.setNombre(nombre);
+        pacien.setApellido(apellido);
+        pacien.setTelefono(telefono);
+        pacien.setDireccion(direccion);
+        pacien.setFecha_nacimiento(fechaNac);
+        pacien.setTieneSM(tieneSM);
+        pacien.setTipoSangre(grupoSang);
+        pacien.setResponsable(respons);
+        
+        controlPersis.crearPaciente(pacien);
+    }
+
+    public List<Responsable> getResponsablesNoAsignados() {
+        return controlPersis.getResponsablesNoAsignados();
+    }
+
+    public List<Paciente> getPacientes() {
+        return controlPersis.getPacientes(); 
+    }
+
+    public Paciente traerPaciente(int id) {
+        return controlPersis.traerPaciente(id);
+    }
+
+    public void borrarPaciente(int id) {
+        controlPersis.borrarPaciente(id);
+    }
+
+    public void crearPersona(String dni, String nombre, String apellido, String telefono, String direccion, Date fechaNac) {
+        Persona pers = new Persona();
+        pers.setDni(dni);
+        pers.setNombre(nombre);
+        pers.setApellido(apellido);
+        pers.setTelefono(telefono);
+        pers.setDireccion(direccion);
+        pers.setFecha_nacimiento(fechaNac);
+        controlPersis.crearPersona(pers);
+
+    }
+
+    public void editarPaciente(Paciente pacien, String dni, String nombre, String apellido, String telefono, String direccion, Date fechaNac, boolean tieneSM, String grupoSang, String idResponsable) {
+        Integer idResp = null;
+        Responsable respons= null;
+        if (idResponsable!= null){
+            idResp = Integer.parseInt( idResponsable);
+            respons= traerResponsable(idResp);
+        }
+        
+        Paciente paciente = pacien;
+        paciente.setDni(dni);
+        paciente.setNombre(nombre);
+        paciente.setApellido(apellido);
+        paciente.setTelefono(telefono);
+        paciente.setDireccion(direccion);
+        paciente.setFecha_nacimiento(fechaNac);
+        paciente.setTieneSM(tieneSM);
+        paciente.setTipoSangre(grupoSang);
+        paciente.setResponsable(respons);
+        
+        controlPersis.editarPaciente(paciente);
+    }
+
+    public void editarPersona(Persona pers, String dni, String nombre, String apellido, String telefono, String direccion, Date fechaNac) {
+        Persona persona = pers;
+        
+        persona.setDni(dni);
+        persona.setNombre(nombre);
+        persona.setApellido(apellido);
+        persona.setTelefono(telefono);
+        persona.setDireccion(direccion);
+        persona.setFecha_nacimiento(fechaNac);
+        controlPersis.editarPersona(persona);
+    }
+
 
 }
