@@ -10,6 +10,7 @@ import logica.Odontologo;
 import logica.Paciente;
 import logica.Persona;
 import logica.Responsable;
+import logica.Secretario;
 import logica.Usuario;
 import persistencia.exceptions.NonexistentEntityException;
 
@@ -195,6 +196,40 @@ public class ControladoraDePersistencia {
     public void editarPaciente(Paciente paciente) {
         try {
             pacJPA.edit(paciente);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public List<Usuario> getUsuariosSecreSinAsignar() {
+         
+        return usuJPA.getUsuariosSecreSinAsignar();
+
+    }
+
+    public void crearSecretario(Secretario secre) {
+        secreJPA.create(secre);
+    }
+
+    public List<Secretario> getSecretarios() {
+        return secreJPA.findSecretarioEntities();
+    }
+
+    public Secretario traerSecretario(int idSecre) {
+        return secreJPA.findSecretario(idSecre);
+    }
+
+    public void borrarSecretario(int idSecre) {
+        try {
+            secreJPA.destroy(idSecre);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editarSecretario(Secretario secreEdit) {
+        try {
+            secreJPA.edit(secreEdit);
         } catch (Exception ex) {
             Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }

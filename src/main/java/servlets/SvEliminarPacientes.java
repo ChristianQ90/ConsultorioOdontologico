@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import logica.Controladora;
 import logica.Paciente;
 import logica.Persona;
-import logica.Responsable;
 
 
 @WebServlet(name = "SvEliminarPacientes", urlPatterns = {"/SvEliminarPacientes"})

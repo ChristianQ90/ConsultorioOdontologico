@@ -9,7 +9,7 @@
 <%@include file="components/bodyprimeraparte.jsp"%>
 
 <h1>Edición de Pacientes</h1>
-<p>Este es el apartado para modificar un pacientes en el sistema.</p>
+<p>Este es el apartado para modificar un paciente en el sistema.</p>
 <% Date fechaNac = (Date) request.getSession().getAttribute("fechaNac");
    Long edadPaciente = (Long) request.getSession().getAttribute("edadPaciente");
    Paciente pacienteEditar = (Paciente)request.getSession().getAttribute("pacienteEditar"); %>

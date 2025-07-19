@@ -165,8 +165,10 @@ public class UsuarioJpaController implements Serializable {
         EntityManager em = getEntityManager();
         List<Usuario> resultados = new ArrayList<Usuario>();
         try {
-            String jpql = "SELECT u FROM Usuario u WHERE u.rol = 'Odontologo/a' AND u.id_usuario NOT IN " +
-                      "(SELECT o.unUsuario.id_usuario FROM Odontologo o WHERE o.unUsuario IS NOT NULL)";
+            /*String jpql = "SELECT u FROM Usuario u WHERE u.rol = 'Odontologo/a' AND u.id_usuario NOT IN " +
+                      "(SELECT o.unUsuario.id_usuario FROM Odontologo o WHERE o.unUsuario IS NOT NULL)";*/
+            String jpql = "SELECT u FROM Usuario u LEFT JOIN Odontologo o ON o.unUsuario = u " +
+              "WHERE u.rol = 'Odontologo/a' AND o.id IS NULL";
             resultados = em.createQuery(jpql, Usuario.class).getResultList();
             
         } finally {
@@ -187,6 +189,22 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
         return resultados;
+    }
+
+    List<Usuario> getUsuariosSecreSinAsignar() {
+        
+        EntityManager em = getEntityManager();
+        List<Usuario> resultados = new ArrayList<Usuario>();
+        try {
+            String jpql = "SELECT u FROM Usuario u LEFT JOIN Secretario s ON s.unUsuario = u " +
+              "WHERE u.rol = 'Secretario/a' AND s.id IS NULL";
+            resultados = em.createQuery(jpql, Usuario.class).getResultList();
+            
+        } finally {
+            em.close();
+        }
+        return resultados;
+
     }
     
 }

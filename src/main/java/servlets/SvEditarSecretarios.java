@@ -1,4 +1,3 @@
-
 package servlets;
 
 import java.io.IOException;
@@ -10,18 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logica.Controladora;
-import logica.Paciente;
 import logica.Persona;
+import logica.Secretario;
 
-
-
-@WebServlet(name = "SvEditarPacientes", urlPatterns = {"/SvEditarPacientes"})
-public class SvEditarPacientes extends HttpServlet {
+@WebServlet(name = "SvEditarSecretarios", urlPatterns = {"/SvEditarSecretarios"})
+public class SvEditarSecretarios extends HttpServlet {
     Controladora control = new Controladora();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
 
@@ -29,44 +26,38 @@ public class SvEditarPacientes extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int idPacien = Integer.parseInt(request.getParameter("id"));
+        int idSecre = Integer.parseInt(request.getParameter("id"));
         
-        Paciente pacienteEditar = control.traerPaciente(idPacien);
+        Secretario secreEditar = control.traerSecretario(idSecre);
         
         HttpSession miSesion = request.getSession();
-        miSesion.setAttribute("pacienteEditar", pacienteEditar);
+        miSesion.setAttribute("secreEditar", secreEditar);
         
-        response.sendRedirect("editarPacientesVerificarNacimiento.jsp");
+        
+        response.sendRedirect("SvUsuSecreSinAsignarEdit");
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String dni = request.getParameter("dni");
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String telefono = request.getParameter("telefono");
         String direccion = request.getParameter("direccion");
-        Date fechaNac = (Date) request.getSession().getAttribute("fechaNac");
-        String cuentaConSegMed = request.getParameter("tieneSM");
-        boolean tieneSM = false;
-        String grupoSang = request.getParameter("grupoSang");
-        String idResponsable = request.getParameter("responsable");
+        Date fechaNac = Date.valueOf(request.getParameter("fechaNac"));
+        String sector = request.getParameter("sector");
+        String idUsuario = request.getParameter("usuario");
         
-        //System.out.println(cuentaConSegMed+" GS: "+grupoSang+" IdResp: "+idResponsable);
-        if (cuentaConSegMed!=null){
-            if(cuentaConSegMed.equalsIgnoreCase("true")){
-            tieneSM = true;
-            }
-        }
-        Paciente pacien = (Paciente) request.getSession().getAttribute("pacienteEditar");
-        Persona pers = control.traerPersona(pacien.getDni());
+        Secretario secre = (Secretario) request.getSession().getAttribute("secreEditar");
+        Persona pers = control.traerPersona(secre.getDni());
         
         control.editarPersona(pers,dni,nombre,apellido,telefono,direccion,fechaNac);
-        control.editarPaciente(pacien,dni,nombre,apellido,telefono,direccion,fechaNac,tieneSM,grupoSang,idResponsable);
+        control.editarSecretario(secre,dni,nombre,apellido,telefono,direccion,fechaNac,sector,idUsuario);
         
-        response.sendRedirect("SvPaciente");
+        response.sendRedirect("SvSecretario");
     }
 
 

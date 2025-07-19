@@ -251,5 +251,63 @@ public class Controladora {
         controlPersis.editarPersona(persona);
     }
 
+    public List<Usuario> getUsuariosSecreSinAsignar() {
+        return controlPersis.getUsuariosSecreSinAsignar();
+    }
+
+    public void crearSecretario(String dni, String nombre, String apellido, String telefono, String direccion, Date fechaNac, String sector, String usuarioID) {
+        Usuario usu = null;
+        if(usuarioID!= null){
+            int usuID = Integer.parseInt(usuarioID);
+            usu = controlPersis.traerUsuario(usuID);
+        }
+        Secretario secre = new Secretario();
+        secre.setDni(dni);
+        secre.setNombre(nombre);
+        secre.setApellido(apellido);
+        secre.setTelefono(telefono);
+        secre.setDireccion(direccion);
+        secre.setFecha_nacimiento(fechaNac);
+        secre.setSector(sector);
+        secre.setUnUsuario(usu);
+        
+        controlPersis.crearSecretario(secre);
+
+    }
+
+    public List<Secretario> getSecretarios() {
+        return controlPersis.getSecretarios();
+    }
+
+    public Secretario traerSecretario(int idSecre) {
+        return controlPersis.traerSecretario(idSecre);
+    }
+
+    public void borrarSecretario(int idSecre) {
+        controlPersis.borrarSecretario(idSecre);
+    }
+
+    public void editarSecretario(Secretario secre, String dni, String nombre, String apellido, String telefono, String direccion, Date fechaNac, String sector, String idUsuario) {
+
+        Integer idUsu = null;
+        Usuario usuario= null;
+        if (idUsuario!= null){
+            idUsu = Integer.parseInt( idUsuario);
+            usuario= traerUsuario(idUsu);
+        }
+        
+        Secretario secreEdit = secre;
+        secreEdit.setDni(dni);
+        secreEdit.setNombre(nombre);
+        secreEdit.setApellido(apellido);
+        secreEdit.setTelefono(telefono);
+        secreEdit.setDireccion(direccion);
+        secreEdit.setFecha_nacimiento(fechaNac);
+        secreEdit.setSector(sector);
+        secreEdit.setUnUsuario(usuario);
+        
+        controlPersis.editarSecretario(secreEdit);
+    }
+
 
 }

@@ -2,6 +2,7 @@
 package logica;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -10,7 +11,7 @@ public class Secretario extends Persona{
     
     //private int id_secretario;
     private String sector;
-    @OneToOne
+    @OneToOne (cascade = CascadeType.REMOVE)
     private Usuario unUsuario;
 
     public Secretario() {

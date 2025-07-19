@@ -4,7 +4,7 @@
 <%@include file="components/bodyprimeraparte.jsp"%>
 
 <h1>Edición de Usuarios</h1>
-<p>Este es el apartado para modificar un usuarios del sistema.</p>
+<p>Este es el apartado para modificar un usuario del sistema.</p>
 
 <%Usuario usu = (Usuario)request.getSession().getAttribute("usuEditar"); %>
 

@@ -6,7 +6,7 @@
 <%@include file="components/bodyprimeraparte.jsp"%>
 
 <h1>Alta Odontólogos</h1>
-<p>Antes de crear un Odontólogo es necesario crear un <b>Usuario</b> con su contraseña al cuál será vinculado</p>
+<p>Recuerde que antes de crear un Odontólogo es necesario crear un <b>Usuario</b> con su contraseña al cuál será vinculado.</p>
 <form class="user" action="SvOdontologo" method="POST">
                                 <div class="form-group col">
                                     <div class="col-sm-6 mb-3">
@@ -30,11 +30,12 @@
                                                placeholder="Dirección" required>
                                     </div>
                                     <div class="col-sm-6 mb-3">
-                                        <label class="form-check-label" for="fechanac" style="margin-left: 1rem;">Fecha de Nacimiento: </label>
+                                        <label class="form-check-label" for="fechanac" >Fecha de Nacimiento: </label>
                                         <input type="date" class="form-control form-control-user" id="fechanac" name="fechanac"
                                                placeholder="Fecha Nac" required>
                                     </div>
                                     <div class="col-sm-6 mb-3">
+                                        <label class="form-check-label" for="especialidad" >Especialidad: </label>
                                         <select class="form-control form-control" id="especialidad" name="especialidad" style="border-radius: 2rem; height: 3rem; font-size: 14;" required>
                                             <option value="" disabled selected>Seleccione especialidad</option>
                                             <option value="Ortodoncia">Ortodoncia</option>
@@ -49,7 +50,7 @@
                                 </div>
     
                                 <!-- Acá va a ir todo lo que respecta a horarios y usuarios -->
-                                <label>Horarios de atención :</label>
+                                <label style="margin-left: 1.5rem;">Horarios de atención :</label>
                                 <div class="form-group row" >
                                     <div class="col-sm-0 mb-3 mb-sm-0">
                                         <label style="margin-top: 0.7rem; margin-left: 2.5rem;">Inicio :</label>
@@ -65,7 +66,7 @@
                                     </div>
                                 </div>
                                 
-                                <label>Días de atención:</label>
+                                <label style="margin-left: 1.5rem;">Días de atención:</label>
                                 <div class="form-group row" id="diasCheckboxes" style="margin-left: 1.6rem;">
                                   <div class="form-check form-check-inline">
                                     <input type="checkbox" class="form-check-input" id="lunes" name="diasAtencion" value="Lunes">
@@ -97,13 +98,13 @@
                                   </div>
                                 </div>
                                 
-                                <label>Usuario asociado al Odontólogo:</label>
                                 <% 
                                     List<Usuario> listaUsuarios =(List) request.getSession().getAttribute("listaUsuOdontoSinAsignar");
                                 %>
                                 <div class="form-group row" style="margin-left: 1rem">
                                     <div class="col-sm-6 mb-3">
-                                        <select class="form-control form-control" id="usuario" name="usuario" style="border-radius: 2rem; height: 3rem; font-size: 14;" required>
+                                        <label>Usuario asociado al Odontólogo:</label>
+                                        <select class="form-control form-control" id="usuario" name="usuario" style="border-radius: 2rem; height: 3rem; font-size: 14px;" required>
                                             <% for (Usuario usu : listaUsuarios){%>
                                             <option value="<%=usu.getId_usuario()%>"><%=usu.getNombreUsuario()%></option>
                                             <%}%>

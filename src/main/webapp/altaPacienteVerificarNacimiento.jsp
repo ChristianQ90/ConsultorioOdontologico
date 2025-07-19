@@ -6,7 +6,7 @@
 
 <h1>Alta Pacientes</h1>
 <p>Para acceder al formulario de alta de pacientes previamente indique la fecha de nacimiento del mismo.</p>
-<p>Recuérde que si el mismo es menor de edad deberá asignarle un <b>responsable</b>, puede dar de alta un responsable en la sección correspondiente.</p>
+<p>Recuerde que si el mismo es menor de edad deberá asignarle un <b>responsable</b>, puede dar de alta un responsable en la sección correspondiente.</p>
     <form class="user" action="SvPacienteFechaNac" method="GET">
         <div class="form-group col">
             <div class="col-sm-6 mb-3">

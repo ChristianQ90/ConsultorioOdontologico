@@ -1,4 +1,3 @@
-
 package servlets;
 
 import java.io.IOException;
@@ -8,14 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import logica.Controladora;
-import logica.Odontologo;
 import logica.Persona;
+import logica.Secretario;
 
-
-@WebServlet(name = "SvEliminarOdontologos", urlPatterns = {"/SvEliminarOdontologos"})
-public class SvEliminarOdontologos extends HttpServlet {
+@WebServlet(name = "SvEliminarSecretarios", urlPatterns = {"/SvEliminarSecretarios"})
+public class SvEliminarSecretarios extends HttpServlet {
     Controladora control = new Controladora();
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -28,25 +26,22 @@ public class SvEliminarOdontologos extends HttpServlet {
         
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int idOdonto = Integer.parseInt( request.getParameter("id"));
+        int idSecre = Integer.parseInt( request.getParameter("id"));
 
-        Odontologo odonto = control.traerOdontologo(idOdonto);
-        Persona pers = control.traerPersona(odonto.getDni());//Suponiendo que el dni que se ingresa es distinto en cada alta
+        Secretario secre = control.traerSecretario(idSecre);
+        Persona pers = control.traerPersona(secre.getDni());//Suponiendo que el dni que se ingresa es distinto en cada alta
         
         control.borrarPersona(pers.getId());
-        control.borrarOdontologo(idOdonto);
+        control.borrarSecretario(idSecre);
 
-        response.sendRedirect("SvOdontologo");
-        
-        
+        response.sendRedirect("SvSecretario");
     }
 
-
+   
     @Override
     public String getServletInfo() {
         return "Short description";

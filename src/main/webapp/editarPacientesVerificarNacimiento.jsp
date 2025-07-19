@@ -8,7 +8,7 @@
 
 <h1>Edición de Pacientes</h1>
 <p>Para acceder al formulario de edición de pacientes previamente compruebe si la fecha de nacimiento del mismo es correcta.</p>
-<p>Recuérde que si el mismo es menor de edad deberá asignarle un <b>responsable</b>, puede dar de alta un responsable en la sección correspondiente.</p>
+<p>Recuerde que si el mismo es menor de edad deberá asignarle un <b>responsable</b>, puede dar de alta un responsable en la sección correspondiente.</p>
 <% Paciente pacienteEditar = (Paciente)request.getSession().getAttribute("pacienteEditar");%>
     <form class="user" action="SvPacienteFechaNac" method="POST">
         <div class="form-group col">
