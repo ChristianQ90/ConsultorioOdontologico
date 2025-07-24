@@ -5,6 +5,8 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -137,6 +139,42 @@ public class TurnoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    boolean verificarExistenciaTurno(Date fechaTurno, String rangoSeleccionado, int idOdonto) {
+        EntityManager em = getEntityManager();
+        try {
+            String jpql = "SELECT t FROM Turno t WHERE t.fecha_turno = :fecha AND t.hora_turno = :hora AND t.odonto.id = :idodonto";
+            List<Turno> resultados = em.createQuery(jpql, Turno.class)
+                                         .setParameter("fecha", fechaTurno)
+                                         .setParameter("hora", rangoSeleccionado)
+                                         .setParameter("idodonto", idOdonto)
+                                         .setMaxResults(1)
+                                         .getResultList();
+            if(resultados.size()==0){
+                return false;
+            }else{
+                return true;
+            }
+        } finally {
+            em.close();
+        }
+    }
+
+    List<Turno> getTurnosEnFechaDeOdonto(Date fechaTurno, int idOdonto) {
+        EntityManager em = getEntityManager();
+        List<Turno> resultados = new ArrayList<>();
+        try {
+            String jpql = "SELECT t FROM Turno t WHERE t.fecha_turno = :fecha AND t.odonto.id = :idodonto";
+            resultados = em.createQuery(jpql, Turno.class)
+                                         .setParameter("fecha", fechaTurno)
+                                         .setParameter("idodonto", idOdonto)
+                                         .getResultList();
+            
+        } finally {
+            em.close();
+        }
+        return resultados;
     }
     
 }

@@ -1,6 +1,7 @@
 
 package persistencia;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,6 +12,7 @@ import logica.Paciente;
 import logica.Persona;
 import logica.Responsable;
 import logica.Secretario;
+import logica.Turno;
 import logica.Usuario;
 import persistencia.exceptions.NonexistentEntityException;
 
@@ -234,6 +236,42 @@ public class ControladoraDePersistencia {
             Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public boolean verificarExistenciaTurno(Date fechaTurno, String rangoSeleccionado, int idOdonto) {
+        return turnJPA.verificarExistenciaTurno( fechaTurno,  rangoSeleccionado, idOdonto);
+    }
+
+    public void crearTurno(Turno turno) {
+        turnJPA.create(turno);
+    }
+
+    public List<Turno> getTurnosEnFechaDeOdonto(Date fechaTurno, int idOdonto) {
+        return turnJPA.getTurnosEnFechaDeOdonto(fechaTurno,idOdonto);
+    }
+
+    public Turno traerTurno(int id) {
+        return turnJPA.findTurno(id);
+    }
+
+    public void borrarTurno(int id) {
+        try {
+            turnJPA.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editarTurno(Turno turnoEditar) {
+        try {
+            turnJPA.edit(turnoEditar);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraDePersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+
+
 
     
 

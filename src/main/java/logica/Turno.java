@@ -70,6 +70,22 @@ public class Turno implements Serializable {
     public void setAfeccion(String afeccion) {
         this.afeccion = afeccion;
     }
+
+    public Odontologo getOdonto() {
+        return odonto;
+    }
+
+    public void setOdonto(Odontologo odonto) {
+        this.odonto = odonto;
+    }
+
+    public Paciente getPacien() {
+        return pacien;
+    }
+
+    public void setPacien(Paciente pacien) {
+        this.pacien = pacien;
+    }
     
     
 }

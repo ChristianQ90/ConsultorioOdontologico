@@ -92,7 +92,7 @@
                 </div>
             </li>
             
-                        <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSecre"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -105,6 +105,23 @@
                         <h6 class="collapse-header">Acciones:</h6>
                         <a class="collapse-item" href="SvSecretario">Ver Secretarios</a>
                         <a class="collapse-item" href="SvUsuSecreSinAsignar">Alta Secretarios</a>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTurnos"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-solid fa-calendar-check"></i>
+                    <span>Turnos</span>
+                </a>
+                <div id="collapseTurnos" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Acciones:</h6>
+                        <a class="collapse-item" href="SvTurno">Ver Turnos</a>
+                        <a class="collapse-item" href="SvLimpiarBusquedaOdonto">Nuevo Turno</a>
                     </div>
                 </div>
             </li>

@@ -2,11 +2,15 @@
 package logica;
 
 import java.sql.Date;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import persistencia.ControladoraDePersistencia;
 
 
@@ -307,6 +311,151 @@ public class Controladora {
         secreEdit.setUnUsuario(usuario);
         
         controlPersis.editarSecretario(secreEdit);
+    }
+
+    public String pasarFechaADia(LocalDate localDate) {
+        // El valor de getDayOfWeek va de 1 (Lunes) a 7 (Domingo)
+        int numeroDia = localDate.getDayOfWeek().getValue();
+        String[] diasSemana = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
+        String diaEnEspaniol = diasSemana[numeroDia-1]; 
+
+        return diaEnEspaniol;
+    }
+
+    public List<Odontologo> filtrarOdontologosDeLista(List<Odontologo> listaOdontoCompleta, String especialidad, String diaSemana) {
+        List<Odontologo> listaOdontoFiltrada = new ArrayList<>();
+        String diasAtencionConcat = "";
+        if(listaOdontoCompleta.size()>0){
+            
+            for(Odontologo odonto : listaOdontoCompleta){
+                
+                if(odonto.getEspecialidad().equalsIgnoreCase(especialidad)){
+                    diasAtencionConcat=odonto.getUnHorario().getDias_atencion();
+                    
+                    if(diasAtencionConcat.contains(diaSemana)){
+                        listaOdontoFiltrada.add(odonto);
+                    }         
+                }
+            }
+        }
+        return listaOdontoFiltrada;
+    }
+
+    public List<Horario> traerHorariosDeListaFiltrada(List<Odontologo> listaOdontoFiltrada) {
+        List<Horario> listaHorarios = new ArrayList<>();
+        if (!listaOdontoFiltrada.isEmpty()){
+            for(Odontologo odonto : listaOdontoFiltrada){
+                listaHorarios.add(odonto.getUnHorario());
+            }
+        }
+        return listaHorarios;
+    }
+
+    public List<String> elaborarRangosHorarios(String idOdonto) {
+        List<String> rangosHorarios = new ArrayList<>();
+
+        if (idOdonto != null) {
+            int id = Integer.parseInt(idOdonto);
+            Odontologo odontoSeleccionado = controlPersis.traerOdontologo(id);
+            Horario horario = odontoSeleccionado.getUnHorario();
+
+            String horaInicioStr = horario.getHorario_incio();
+            String horaFinStr = horario.getHorario_fin();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime horaInicio = LocalTime.parse(horaInicioStr, formatter);
+            LocalTime horaFin = LocalTime.parse(horaFinStr, formatter);
+
+            LocalTime actual = horaInicio;
+            while (actual.isBefore(horaFin)) {
+                LocalTime siguiente = actual.plusMinutes(30);
+                if (siguiente.isAfter(horaFin)) {
+                    siguiente = horaFin;
+                }
+
+                // Armar el rango como string
+                String rango = actual.format(formatter) + " - " + siguiente.format(formatter);
+                rangosHorarios.add(rango);
+
+                // Avanzar
+                actual = siguiente;
+            }
+        }
+
+        return rangosHorarios;
+    }
+
+    public Odontologo traerOdontologo(String idOdonto) {
+        Odontologo odonto = new Odontologo();
+        if(idOdonto!=null){
+            int id = Integer.parseInt(idOdonto);
+            odonto = controlPersis.traerOdontologo(id);   
+        }
+        return odonto;              
+    }
+
+    public Paciente traerPaciente(String idPacien) {
+        Paciente pacien = new Paciente();
+        
+        if(idPacien!=null){
+            int id = Integer.parseInt(idPacien);
+            pacien = controlPersis.traerPaciente(id);
+        }
+        return pacien;
+    }
+
+    public void crearTurno(String afeccion, Date fechaTurno, String rangoSeleccionado, Odontologo odontoSeleccionado, Paciente pacienteSeleccionado) {
+        Turno turno = new Turno();
+        turno.setAfeccion(afeccion);
+        turno.setFecha_turno(fechaTurno);
+        turno.setHora_turno(rangoSeleccionado);
+        turno.setOdonto(odontoSeleccionado);
+        turno.setPacien(pacienteSeleccionado);
+        controlPersis.crearTurno(turno);
+    }
+
+    public boolean verificarExistenciaTurno(Date fechaTurno, String rangoSeleccionado, Odontologo odontoSeleccionado) {
+        boolean existeTurnoEnRango = false;
+        int idOdonto = odontoSeleccionado.getId();
+        existeTurnoEnRango = controlPersis.verificarExistenciaTurno(fechaTurno, rangoSeleccionado,idOdonto);
+        return existeTurnoEnRango;
+    }
+
+    public List<Turno> getTurnosEnFechaDeOdonto(Date fechaTurno, Odontologo odontoSeleccionado) {
+        int idOdonto = odontoSeleccionado.getId();
+        return controlPersis.getTurnosEnFechaDeOdonto(fechaTurno,idOdonto);
+    }
+
+    public void borrarTurno(String idTurno) {
+        if(idTurno != null){
+            int id = Integer.parseInt(idTurno);
+            controlPersis.borrarTurno(id);
+        }
+    }
+
+    public Turno traerTurno(String idTurno) {
+        Turno turno = null;
+        if(idTurno != null){
+            int id = Integer.parseInt(idTurno);
+            turno = controlPersis.traerTurno(id);
+        }
+        return turno;
+    }
+
+    public List<String> verificarSiOdontoTrabaja(Odontologo odontoSeleccionado, String diaSemana) {
+        List<String> rangosHorarios = new ArrayList<>();
+        if (odontoSeleccionado!=null){
+            String diasAtencionConcat = odontoSeleccionado.getUnHorario().getDias_atencion();
+            if(diasAtencionConcat.contains(diaSemana)){
+                String idOdonto = String.valueOf(odontoSeleccionado.getId());
+                rangosHorarios= elaborarRangosHorarios(idOdonto) ;
+            } 
+        }
+        return rangosHorarios;
+    }
+
+    public void editarTurno(Turno turnoEditar) {
+        controlPersis.editarTurno(turnoEditar);
     }
 
 
